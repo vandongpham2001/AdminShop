@@ -1,0 +1,81 @@
+﻿@using PagedList
+@using PagedList.Mvc;
+@model PagedList.IPagedList<ModelEF.Model.tblCategory>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Quản lý danh mục sản phẩm
+}
+@using (Html.BeginForm("Index", "Category", FormMethod.Post))
+{
+    <div class="col-lg-12 form-group">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.ActionLink("Tạo mới", "Create", "Category", new { @class = "btn btn-danger" })
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="searchString" value="@ViewBag.SearchString" placeholder="Nhập từ khoá tìm kiếm" class="form-control" />
+            </div>
+            <div class=" col-md-2">
+                <input type="submit" class="btn btn-default" value="Tìm kiếm" />
+            </div>
+        </div>
+    </div>
+}
+<div class="col-lg-12 form-group">
+    <table class="table">
+        <tr>
+            <th>STT</th>
+            <th>Cấu hình</th>
+            <th>
+                Mã danh mục
+            </th>
+            <th>
+                Tên danh mục
+            </th>
+            <th>Mô tả</th>
+            <th>Trạng thái</th>
+        </tr>
+        @{ var i = 1;}
+        @foreach (var item in Model)
+        {
+            <tr id="row_@item.Id">
+                <td>@i</td>
+                <td>
+                    <a href="/Admin/Category/Edit/@item.Id">Sửa</a>
+                    |
+                    @Ajax.ActionLink("Xoá", "Delete", new { @id = item.Id }, new AjaxOptions
+               {
+                   Confirm = "Bạn có muốn xoá bản ghi này?",
+                   OnComplete = "$('#row_" + @item.Id + "').remove()",
+                   HttpMethod = "Delete"
+               })
+                </td>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @(item.status.GetValueOrDefault(false)?"Active":"Blocked")
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MaDM }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.MaDM }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MaDM })
+                    </td>*@
+            </tr>
+            i++;
+        }
+
+    </table>
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }));
+</div>

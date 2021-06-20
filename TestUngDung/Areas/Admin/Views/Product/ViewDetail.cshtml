@@ -1,0 +1,96 @@
+﻿@model ModelEF.Model.tblProduct
+
+@{
+    ViewBag.Title = "ViewDetail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    Chi tiết sản phẩm
+}
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.HinhAnh)*@
+            @*@if (Model.Image != null)
+                {
+                    var imgSrc = $"data:Image/*;base64,{Convert.ToBase64String(Model.Image)}";
+                    <img src="@imgSrc" alt="@Model.Name" />
+                }*@
+            @*@if (Model.Image != null)
+                {
+                    string base64String = Convert.ToBase64String(Model.Image);
+                    <img src="@String.Format("data:image/png;base64,{0}", base64String)" />
+                }*@
+            @*@{
+                    var base64 = Convert.ToBase64String(Model.Image);
+                    var imgsrc = string.Format("data:Image/*;base64,{0}", base64);
+                <img src='@imgsrc' style="max-width:100px; max-height:100px;">
+                }*@
+            <img src='~/Image/@Model.Image' style="max-width:200px; max-height:200px;">
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
